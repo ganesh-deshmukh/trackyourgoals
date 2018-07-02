@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/ganeshdeshmukh1612/goal-tracker/issues"
   },
-  "homepage": "https://github.com/ganeshdeshmukh1612/goal-tracker#readme"
+  "homepage": "https://github.com/ganeshdeshmukh1612/goal-tracker#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.17.5"
+  }
 }
