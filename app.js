@@ -56,8 +56,23 @@ app.get('/goals/add',(req,res)=>{
 
 // Process post request of form-action="/goals"
 app.post('/goals/',(req,res)=>{
-    console.log(req.body);
-    res.send('ok');
+    let errors = [];
+    if(!req.body.title){
+      errors.push({text:'Title is missing'})
+    }
+    if(!req.body.details){
+      errors.push({text:"Details are missing"})
+    }
+    if(errors.length>0){
+      res.render('goals/add',{
+        errors:errors,
+        title:req.body.title,
+        details:req.body.details,
+      })
+    }
+    else{
+      res.send("submitted")
+    }
 })
 
 const port = 3000;
