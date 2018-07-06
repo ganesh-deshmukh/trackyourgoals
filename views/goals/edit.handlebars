@@ -1,19 +1,14 @@
-{{#each errors }}
-    <div class="offset-3 alert alert-danger w-50"><i class="far fa-frown"></i> {{text}} </div>
-{{else}}
-{{/each}}
-
 <div class="w-50 container">
     <div class="card card-body">
-        <h3>Track Goals</h3>
+        <h3>Edit your Goal</h3>
         <form action="/goalsList" method="POST">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input  type="text" class="form-control" name="title">
+                <input value="{{goal.title}}" type="text" class="form-control" name="title">
             </div>
             <div class="form-group">
                 <label for="details">Details</label>
-                <textarea class="form-control" name="details"></textarea>
+                <textarea class="form-control" name="details">{{goal.details}}</textarea>
             </div>
             <button type="submit" class="btn btn-outline-success">Submit Goal</button>
         </form>

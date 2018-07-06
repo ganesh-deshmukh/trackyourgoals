@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost/goal-tracker',{
  .then(()=>{console.log('MongoDB Connected')})
  .catch(err =>{console.log(err)})
 
- // import Goal.js and assin value of model in variable Goal
+ // import Goal.js and assign value of model in variable Goal
  require('./models/Goal');
 const Goal = mongoose.model('goals');
  
@@ -31,7 +31,7 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
-// Index Route 
+//  Index Route-  
 app.get('/', (req, res) => {
     const title = "welcome!";
     res.render('index', {
@@ -39,14 +39,20 @@ app.get('/', (req, res) => {
     });
 })
 
-// List Goals-list Route
-app.get('/goals',(req,res)=>{
-    res.render('goals/goals')
-})
-
 // About Route
 app.get('/about', (req, res) => {
     res.render("about");
+})
+
+// List all Goals in list - Route
+app.get('/goalsList',(req,res)=>{
+    Goal.find({})
+    .sort({date:'desc'})
+    .then(goals =>{
+        res.render('goals/goalsList',{
+            goals:goals,
+        })
+    })
 })
 
 // Add Goals-Route form for Input
@@ -54,8 +60,21 @@ app.get('/goals/add',(req,res)=>{
     res.render('goals/add')
 })
 
-// Process post request of form-action="/goals"
-app.post('/goals/',(req,res)=>{
+// Edit goals-route
+app.get('/goals/edit/:id',(req,res)=>{
+    Goal.findOne({
+        _id:req.params.id,
+    })
+    .then(goal =>{
+        res.render('goals/edit', {
+            goal:goal,
+        })
+    });
+    
+})
+
+// Process post request of form-action="/goalsList"
+app.post('/goalsList/',(req,res)=>{
     let errors = [];
     if(!req.body.title){
       errors.push({text:'Title is missing'})
@@ -71,7 +90,15 @@ app.post('/goals/',(req,res)=>{
       })
     }
     else{
-      res.send("submitted")
+        const newUser = {
+            title:req.body.title,
+            details:req.body.details,
+        }
+        new Goal(newUser)
+        .save()
+        .then(goal=>{
+            res.redirect('/goalsList');
+        })
     }
 })
 
