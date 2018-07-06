@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const methodOverride = require('method-override')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
@@ -30,6 +31,9 @@ app.set('view engine', 'handlebars');
 // Body-parser middleware to accept form data
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
+
+// middleware for method override, put and delete.
+app.use(methodOverride('_method'));
 
 //  Index Route-  
 app.get('/', (req, res) => {
@@ -72,6 +76,22 @@ app.get('/goals/edit/:id',(req,res)=>{
     });
     
 })
+
+app.put('/goalsList/:id',(req,res)=> {
+    Goal.findOne({
+        _id:req.params.id
+    })
+    .then(goal=>{
+        // newly edited values
+        goal.title=req.body.title;
+        goal.details=req.body.details;
+
+        goal.save()
+        .then(goal=>{
+            res.redirect('/goalsList')
+        })        
+    })
+});
 
 // Process post request of form-action="/goalsList"
 app.post('/goalsList/',(req,res)=>{
