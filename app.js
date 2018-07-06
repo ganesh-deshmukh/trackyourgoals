@@ -93,6 +93,14 @@ app.put('/goalsList/:id',(req,res)=> {
     })
 });
 
+// delete request to goals]
+app.delete('/goals/:id',(req,res)=>{
+    Goal.remove({_id:req.params.id})
+    .then(()=>{
+        res.redirect(('/goalsList'))
+    })
+})
+
 // Process post request of form-action="/goalsList"
 app.post('/goalsList/',(req,res)=>{
     let errors = [];

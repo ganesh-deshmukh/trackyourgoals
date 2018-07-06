@@ -1,7 +1,8 @@
 <div class="w-50 container">
     <div class="card card-body">
         <h3>Edit your Goal</h3>
-        <form action="/goalsList/{{goal.id}}?_method=put" method="POST">
+            <form action="/goalsList/{{goal.id}}?_method=put" method="POST">
+            <input type="hidden" name="_method" value="PUT" >
             <div class="form-group">
                 <label for="title">Title</label>
                 <input value="{{goal.title}}" type="text" class="form-control" name="title">
