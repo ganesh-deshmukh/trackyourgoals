@@ -9,6 +9,7 @@ const session = require('express-session');
 const app = express();
 
 const goals = require('./routes/goals');
+const users = require('./routes/users');
 
 // To get rid of warning - use Map global promise
 mongoose.Promise = global.Promise;
@@ -66,18 +67,8 @@ app.get('/about', (req, res) => {
     res.render("about");
 })
 
-// Login route 
-app.get('/users/login', (req,res)=>{
-    res.send('login is successful.')
-});
-
-
-// register route 
-app.get('/users/register', (req,res)=>{
-    res.send('register is successful.')
-});
-
 app.use('/goals',goals)
+app.use('/users',users)
 
 
 const port = 3000;
