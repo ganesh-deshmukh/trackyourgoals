@@ -15,13 +15,17 @@
                     </li>
                 </ul>
                 {{#if user}}
-                <ul class="navbar-nav ml-auto pl-5">
+                <ul class="navbar-nav mx-auto pl-5">
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">My Goals</a>
                             <div class="dropdown-menu">
                                 <a href="/goals/goalsList" class="dropdown-item">List Goals</a>
                                 <a href="/goals/add" class="dropdown-item">Add Goals</a>
                             </div>
+                        </li>
+
+                        <li class="nav-item float-right ">
+                            <a href="/users/logout" class="nav-link  ">Logout</a>
                         </li>
                 </ul>
                 {{else}}
