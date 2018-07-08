@@ -12,7 +12,8 @@ router.get('/login', (req,res)=>{
 
 // register route 
 router.get('/register', (req,res)=>{
-    res.send('register is successful.')
+    res.render('../users/register')
+    // res.send('register is successful.')
 });
 
 

@@ -6,22 +6,13 @@
     <p>{{details}}</p>
     <form action="/goals/{{id}}?_method=DELETE" method="post">
         <input type="hidden" name="_method" value="DELETE">
-        <input type="submit" class="btn btn-danger btn-sm float-right " value="Delete">
+        <input type="submit" class="btn btn-danger btn-sm float-right delete " value="Delete">
     </form>
 
 </div>
 {{else}}
 <p>Please add at least one goal.</p>
 {{/each}}
-
-<style>
-    h4{
-        color:blue
-    },
-    btn-danger{
-        padding: -50px;
-    }
-</style>
 
 <script type="text/javascript">
 $(".alert-dismissible").fadeTo(2000, 500).slideUp(500, function(){
