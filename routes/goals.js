@@ -1,12 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router =  express.Router();
+const {ensureAuthenticated} = require('../helpers/auth');
 
 require('../models/Goal');
 const Goal = mongoose.model('goals');
  
 // List all Goals in list - Route
-router.get('/goalsList',(req,res)=>{
+router.get('/goalsList',ensureAuthenticated,(req,res)=>{
     Goal.find({})
     .sort({date:'desc'})
     .then(goals =>{
@@ -17,12 +18,12 @@ router.get('/goalsList',(req,res)=>{
 })
 
 // Add Goals-Route form for Input
-router.get('/add',(req,res)=>{
+router.get('/add',ensureAuthenticated,(req,res)=>{
     res.render('goals/add')
 })
 
 // Edit goals-route
-router.get('/edit/:id',(req,res)=>{
+router.get('/edit/:id',ensureAuthenticated,(req,res)=>{
     Goal.findOne({
         _id:req.params.id,
     })
@@ -34,7 +35,7 @@ router.get('/edit/:id',(req,res)=>{
     
 })
 
-router.put('/goalsList/:id',(req,res)=> {
+router.put('/goalsList/:id',ensureAuthenticated,(req,res)=> {
     Goal.findOne({
         _id:req.params.id
     })
@@ -52,7 +53,7 @@ router.put('/goalsList/:id',(req,res)=> {
 });
 
 // delete request to goals]
-router.delete('/:id',(req,res)=>{
+router.delete('/:id',ensureAuthenticated,(req,res)=>{
     Goal.remove({_id:req.params.id})
     .then(()=>{
         req.flash('success_msg', 'Goal is removed');
@@ -61,7 +62,7 @@ router.delete('/:id',(req,res)=>{
 })
 
 // Process post request of form-action="/goalsList"
-router.post('/goalsList/',(req,res)=>{
+router.post('/goalsList/',ensureAuthenticated,(req,res)=>{
     let errors = [];
     if(!req.body.title){
       errors.push({text:'Title is missing'})
