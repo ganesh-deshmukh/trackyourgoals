@@ -24,10 +24,11 @@ mongoose.connect('mongodb://localhost/goal-tracker',{
 app.engine('handlebars', exphbs(
     {
         defaultLayout: 'main',
-        layoutsDir: __dirname + '/views/layouts/',
-        partialsDir: __dirname + '/views/partials/'
+        // layoutsDir: __dirname + '/views/layouts/',
+        // partialsDir: __dirname + '/views/partials/'
     }
 ));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 
 // Body-parser middleware to accept form data

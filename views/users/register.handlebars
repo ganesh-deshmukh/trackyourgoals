@@ -3,22 +3,22 @@
         <div class="card card-body border-success">
             <i class="fab fa-stack-exchange display-4 mx-auto text-warning"></i>
             <h3 class="text-center">Register Now</h3>
-            <form action="">
+            <form action="/users/register" method="post">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control form-control-sm" name="name" required>
+                    <input type="text" value="{{name}} " class="form-control form-control-sm" name="name" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">EmailID</label>
-                    <input type="email" class="form-control form-control-sm" name="email" required>
+                    <label for="email">Email ID</label>
+                    <input type="email" value="{{email}}" class="form-control form-control-sm" name="email" required>
                 </div>
                 <div class="form-group">
                     <label for="Password">Password</label>
                     <input type="Password" class="form-control form-control-sm" name="password" required>
                 </div>
                 <div class="form-group">
-                    <label for="Password2">Password</label>
-                    <input type="Password2" class="form-control form-control-sm" name="password2" required>
+                    <label for="Password2">Confirm Password</label>
+                    <input type="Password" class="form-control form-control-sm" name="password2" required>
                 </div>
                 <button type="submit" class="btn btn-primary"> Submit</button>
             </form>
