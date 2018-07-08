@@ -23,7 +23,7 @@ router.get('/register', (req,res)=>{
 // Login form post-request
 router.post('/login',(req,res,next)=>{
     passport.authenticate('local', {
-        successRedirect:'/goalsList',
+        successRedirect:'/goals/goalsList',
         failureRedirect:'/users/login',
         failureFlash:true,
     })(req,res,next);
@@ -51,7 +51,7 @@ router.post('/register', (req,res)=>{
         User.findOne({email: req.body.email})
         .then(user => {
             if(user){
-                req.flash('error_msg',"Email already Existed, enter other email");
+                req.flash('error_msg',"Email already Exist, Enter other email");
                 res.redirect('/users/register');
             }
             else{

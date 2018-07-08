@@ -14,15 +14,17 @@
                         <a class="nav-link" href="/about">About</a>
                     </li>
                 </ul>
+                {{#if user}}
                 <ul class="navbar-nav ml-auto pl-5">
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">My Goals</a>
-                        <div class="dropdown-menu">
-                            <a href="/goals/goalsList" class="dropdown-item">List Goals</a>
-                            <a href="/goals/add" class="dropdown-item">Add Goals</a>
-                        </div>
-                    </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">My Goals</a>
+                            <div class="dropdown-menu">
+                                <a href="/goals/goalsList" class="dropdown-item">List Goals</a>
+                                <a href="/goals/add" class="dropdown-item">Add Goals</a>
+                            </div>
+                        </li>
                 </ul>
+                {{else}}
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a href="/users/login" class="nav-link">Login</a>
@@ -33,6 +35,7 @@
                         <a href="/users/register" class="nav-link">Register</a>
                     </li>
                 </ul>
+                {{/if}}
             </div>
         </div>
     </nav>

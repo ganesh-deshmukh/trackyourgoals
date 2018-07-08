@@ -1,12 +1,12 @@
 {{#each goals}}
 <div class="card card-body mx-auto w-50">
     <h4>{{title}}
-        <a class="btn btn-success btn-sm float-right" href="/goals/edit/{{id}}">Edit me</a>
+        <a class="btn btn-success py-1 px-2 float-right" href="/goals/edit/{{id}}">Edit me</a>
     </h4>
     <p>{{details}}</p>
     <form action="/goals/{{id}}?_method=DELETE" method="post">
         <input type="hidden" name="_method" value="DELETE">
-        <input type="submit" class="btn btn-danger btn-sm float-right delete " value="Delete">
+        <input type="submit" class="btn btn-danger btn-sm px-3 float-right delete " value="Delete">
     </form>
 
 </div>

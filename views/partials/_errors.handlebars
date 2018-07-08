@@ -1,3 +1,7 @@
+{{#if error}}
+    <div class="offset-3 alert alert-danger w-50 p-1"><i class="far fa-frown"></i> {{error}} </div>
+ {{/if}}
+
 {{#each errors }}
     <div class="offset-3 alert alert-danger w-50 p-1"><i class="far fa-frown"></i> {{text}} </div>
 {{else}}
