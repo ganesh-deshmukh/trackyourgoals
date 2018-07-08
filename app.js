@@ -3,8 +3,12 @@ const exphbs = require('express-handlebars');
 const methodOverride = require('method-override')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
+const session = require('express-session');
 
 const app = express();
+
+const goals = require('./routes/goals');
 
 // To get rid of warning - use Map global promise
 mongoose.Promise = global.Promise;
@@ -14,10 +18,6 @@ mongoose.connect('mongodb://localhost/goal-tracker',{
  .then(()=>{console.log('MongoDB Connected')})
  .catch(err =>{console.log(err)})
 
- // import Goal.js and assign value of model in variable Goal
- require('./models/Goal');
-const Goal = mongoose.model('goals');
- 
 // Handlebars middleware 
 app.engine('handlebars', exphbs(
     {
@@ -35,7 +35,25 @@ app.use(bodyParser.json())
 // middleware for method override, put and delete.
 app.use(methodOverride('_method'));
 
-//  Index Route-  
+// Express-Session middleware
+app.use(session({
+    secret:'password2encrypt',
+    resave:false,
+    saveUninitialized:true,
+}));
+
+app.use(flash());
+
+// Global variable
+app.use((req,res,next)=>{
+    res.locals.success_msg= req.flash('success_msg');
+    res.locals.error_msg= req.flash('error_msg');
+    res.locals.error= req.flash('error');
+    next();
+});
+
+
+//  Index Route-Homepage 
 app.get('/', (req, res) => {
     const title = "welcome!";
     res.render('index', {
@@ -48,87 +66,19 @@ app.get('/about', (req, res) => {
     res.render("about");
 })
 
-// List all Goals in list - Route
-app.get('/goalsList',(req,res)=>{
-    Goal.find({})
-    .sort({date:'desc'})
-    .then(goals =>{
-        res.render('goals/goalsList',{
-            goals:goals,
-        })
-    })
-})
-
-// Add Goals-Route form for Input
-app.get('/goals/add',(req,res)=>{
-    res.render('goals/add')
-})
-
-// Edit goals-route
-app.get('/goals/edit/:id',(req,res)=>{
-    Goal.findOne({
-        _id:req.params.id,
-    })
-    .then(goal =>{
-        res.render('goals/edit', {
-            goal:goal,
-        })
-    });
-    
-})
-
-app.put('/goalsList/:id',(req,res)=> {
-    Goal.findOne({
-        _id:req.params.id
-    })
-    .then(goal=>{
-        // newly edited values
-        goal.title=req.body.title;
-        goal.details=req.body.details;
-
-        goal.save()
-        .then(goal=>{
-            res.redirect('/goalsList')
-        })        
-    })
+// Login route 
+app.get('/users/login', (req,res)=>{
+    res.send('login is successful.')
 });
 
-// delete request to goals]
-app.delete('/goals/:id',(req,res)=>{
-    Goal.remove({_id:req.params.id})
-    .then(()=>{
-        res.redirect(('/goalsList'))
-    })
-})
 
-// Process post request of form-action="/goalsList"
-app.post('/goalsList/',(req,res)=>{
-    let errors = [];
-    if(!req.body.title){
-      errors.push({text:'Title is missing'})
-    }
-    if(!req.body.details){
-      errors.push({text:"Details are missing"})
-    }
-    if(errors.length>0){
-      res.render('goals/add',{
-        errors:errors,
-        title:req.body.title,
-        details:req.body.details,
-      })
-    }
-    else{
-        const newUser = {
-            title:req.body.title,
-            details:req.body.details,
-        }
-        new Goal(newUser)
-        .save()
-        .then(goal=>{
-            res.redirect('/goalsList');
-        })
-    }
-})
+// register route 
+app.get('/users/register', (req,res)=>{
+    res.send('register is successful.')
+});
+
+app.use('/goals',goals)
+
 
 const port = 3000;
 app.listen(port, function () {
