@@ -16,11 +16,13 @@ const users = require('./routes/users');
 // Passport config 
 require('./config/passport')(passport);
 
+const db = require('./config/database')
 // To get rid of warning - use Map global promise
 mongoose.Promise = global.Promise;
+
 // Connecting to db
-mongoose.connect('mongodb://localhost/goal-tracker',{
-})
+mongoose.connect( db.mongoURI,{
+    })
  .then(()=>{console.log('MongoDB Connected')})
  .catch(err =>{console.log(err)})
 
@@ -93,10 +95,9 @@ app.use('/goals',goals)
 app.use('/users',users)
 
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, function () {
     console.log(`app is running at port ${port}`);
-    console.log('encryption key is ', key    )
 });
 
 // use VS-studio-code-IDE. (ALT+SHIFT+F) for indentation and formating like a pro-coder.
