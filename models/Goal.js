@@ -4,12 +4,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const goalsSchema = new Schema({
+const GoalsSchema = new Schema({
     title:{
         type:String,
         required:true,  
     },
     details:{
+        type:String,
+        required:true,
+    },
+    user:{
         type:String,
         required:true,
     },
@@ -20,7 +24,7 @@ const goalsSchema = new Schema({
 });
 
 //mongoose.model('modelName', SchemaName);
-mongoose.model('goals',goalsSchema);
+mongoose.model('goals',GoalsSchema);
 
 // in app.js ,
 // const Goal = mongoose.model('modelName');

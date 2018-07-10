@@ -6,9 +6,9 @@ const {ensureAuthenticated} = require('../helpers/auth');
 require('../models/Goal');
 const Goal = mongoose.model('goals');
  
-// List all Goals in list - Route
-router.get('/goalsList',ensureAuthenticated,(req,res)=>{
-    Goal.find({})
+// List all Goals-Index in list - Route
+router.get('/',ensureAuthenticated,(req,res)=>{
+    Goal.find({user:req.user.id})
     .sort({date:'desc'})
     .then(goals =>{
         res.render('goals/goalsList',{
@@ -27,15 +27,53 @@ router.get('/edit/:id',ensureAuthenticated,(req,res)=>{
     Goal.findOne({
         _id:req.params.id,
     })
-    .then(goal =>{
-        res.render('goals/edit', {
-            goal:goal,
+    .then(goal => {
+        if(goal.user != req.user.id){
+          req.flash('error_msg', 'Not Authorized');
+          res.redirect('/goals');
+        } else {
+          res.render('goals/edit', {
+            goal:goal
+          });
+        }
+        
+      });
+});
+
+// Process post request of form-action="/goalsList"
+router.post('/',ensureAuthenticated,(req,res)=>{
+         
+    let errors = [];
+    if(!req.body.title){
+      errors.push({text:'Title is missing'})
+    }
+    if(!req.body.details){
+      errors.push({text:"Details are missing"})
+    }
+    if(errors.length>0){
+      res.render('/add',{
+        errors:errors,
+        title:req.body.title,
+        details:req.body.details,
+      })
+    }
+    else{
+        const newUser = {
+            title:req.body.title,
+            details:req.body.details,
+            user:req.user.id,
+        }
+        new Goal(newUser)
+        .save()
+        .then(goal=>{
+        req.flash('success_msg', 'Goal is Added');
+            res.redirect('/goals');
         })
-    });
-    
+    }
 })
 
-router.put('/goalsList/:id',ensureAuthenticated,(req,res)=> {
+// Edit form process
+router.put('/:id',ensureAuthenticated,(req,res)=> {
     Goal.findOne({
         _id:req.params.id
     })
@@ -47,7 +85,7 @@ router.put('/goalsList/:id',ensureAuthenticated,(req,res)=> {
         goal.save()
         .then(goal=>{
             req.flash('success_msg', 'Goal is edited');
-            res.redirect('/goals/goalsList')
+            res.redirect('/goals')
         })        
     })
 });
@@ -57,39 +95,8 @@ router.delete('/:id',ensureAuthenticated,(req,res)=>{
     Goal.remove({_id:req.params.id})
     .then(()=>{
         req.flash('success_msg', 'Goal is removed');
-        res.redirect(('/goals/goalsList'));
+        res.redirect(('/goals'));
     })
 })
-
-// Process post request of form-action="/goalsList"
-router.post('/goalsList/',ensureAuthenticated,(req,res)=>{
-    let errors = [];
-    if(!req.body.title){
-      errors.push({text:'Title is missing'})
-    }
-    if(!req.body.details){
-      errors.push({text:"Details are missing"})
-    }
-    if(errors.length>0){
-      res.render('goals/add',{
-        errors:errors,
-        title:req.body.title,
-        details:req.body.details,
-      })
-    }
-    else{
-        const newUser = {
-            title:req.body.title,
-            details:req.body.details,
-        }
-        new Goal(newUser)
-        .save()
-        .then(goal=>{
-        req.flash('success_msg', 'Goal is Added');
-            res.redirect('/goals/goalsList');
-        })
-    }
-})
-
 
 module.exports = router;

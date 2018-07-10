@@ -42,14 +42,21 @@ app.use(bodyParser.json())
 // Static folder of path-middleware
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // middleware for method override, put and delete.
 app.use(methodOverride('_method'));
 
+
 // Express-Session middleware
+
+var config = require('./secretekey');
+var key = config.secretekey;
+if(!key){
+    key="default_encryption_key";
+}
 app.use(session({
-    secret:'password2encrypt',
-    resave:false,
+    secret:key,  
+      // hide this session key while posting to github.
+    resave:true,
     saveUninitialized:true,
 }));
 
@@ -89,6 +96,7 @@ app.use('/users',users)
 const port = 3000;
 app.listen(port, function () {
     console.log(`app is running at port ${port}`);
+    console.log('encryption key is ', key    )
 });
 
 // use VS-studio-code-IDE. (ALT+SHIFT+F) for indentation and formating like a pro-coder.

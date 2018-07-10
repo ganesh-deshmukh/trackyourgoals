@@ -11,19 +11,17 @@ const User = mongoose.model('users');    //users is a file/Model name passed.
 // Login route 
 router.get('/login', (req,res)=>{
     res.render('./users/login')
-    // res.send('login is successful.')
 });
 
 // user register route 
 router.get('/register', (req,res)=>{
     res.render('users/register')
-    // res.send('register is successful.')
 });
 
 // Login form post-request
 router.post('/login',(req,res,next)=>{
     passport.authenticate('local', {
-        successRedirect:'/goals/goalsList',
+        successRedirect:'/goals',
         failureRedirect:'/users/login',
         failureFlash:true,
     })(req,res,next);
@@ -45,7 +43,7 @@ router.post('/register', (req,res)=>{
             name:req.body.name,
             email:req.body.email,
         });
-        console.log('error occured \n', errors)
+        console.log('\nerror occured \n', errors)
     }
     else{
         User.findOne({email: req.body.email})
@@ -61,21 +59,21 @@ router.post('/register', (req,res)=>{
                     password:req.body.password,
                 });
         
-                bcrypt.genSalt(10,(error,salt)=>{
-                    bcrypt.hash(newUser.password,salt,(error,hash)=>{
-                        if(error) throw error;
-                        newUser.password = hash;
-                        newUser.save()
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(newUser.password, salt, (err, hash) => {
+                      if(err) throw err;
+                      newUser.password = hash;
+                      newUser.save()
                         .then(user => {
-                          req.flash('success_msg','You are successfully registerd.');
-                          res.redirect('login')
+                          req.flash('success_msg', 'You are now registered and can log in');
+                          res.redirect('/users/login');
                         })
-                        .catch(err =>{
-                                console.log(err);
-                                return;
-                        })
-                    })
-                });
+                        .catch(err => {
+                          console.log(err);
+                          return;
+                        });
+                    });
+                  });
             }
         })
     }
