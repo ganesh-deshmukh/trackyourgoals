@@ -8,10 +8,10 @@
     <div class="card card-body">
         <h3>Edit your Goal</h3>
             <form action="/goals/{{goal.id}}?_method=put" method="POST">
-            <input type="hidden" name="_method" value="PUT" >
+            <input type="hidden" name="_method" value="PUT" readonly>
             <div class="form-group">
                 <label for="title">Title</label>
-                <input value="{{goal.title}}" type="text" class="form-control" name="title">
+                <input value="{{goal.title}}" type="text" class="form-control" name="title" readonly>
             </div>
             <div class="form-group">
                 <label for="details">Details</label>

@@ -4,7 +4,7 @@
   "description": "Goal tracker app",
   "main": "app.js",
   "scripts": {
-    "start":"nodemon -e js,handlebars"
+    "start": "nodemon -e js,handlebars"
   },
   "repository": {
     "type": "git",
