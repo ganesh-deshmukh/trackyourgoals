@@ -7,10 +7,18 @@ to install this locally, follow steps as:
 4) `npm start`
 5) Go to browser and type url as `localhost:3000`.
 6) If found any issue then please add in `issues-tab` of this repo.
+  
+  
+  
 
 ![Welcome Page](./public/img/welcomepage.png?raw=true "Welcome Page");
+
 ![About Me Page](./public/img/aboutme.png?raw=true "About Me");
+
 ![Register Page](./public/img/register.png?raw=true "Register Page");
+
 ![Login Page](./public/img/login.png?raw=true "Login Page");
+
 ![Empty-list Page](./public/img/emptyList.png?raw=true "Empty-list Page");
-![List all your Goals](./public/img/goalsList.png?raw=true "Welcome");
+
+![List all your Goals](./public/img/goalsList.png?raw=true "Welcome")
