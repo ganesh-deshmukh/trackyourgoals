@@ -11,14 +11,14 @@ to install this locally, follow steps as:
   
   
 
-![Welcome Page](./public/img/welcomepage.png?raw=true "Welcome Page");
+![Welcome Page](./public/img/welcomepage.png?raw=true "Welcome Page")
 
-![About Me Page](./public/img/aboutme.png?raw=true "About Me");
+![About Me Page](./public/img/aboutme.png?raw=true "About Me")
 
-![Register Page](./public/img/register.png?raw=true "Register Page");
+![Register Page](./public/img/register.png?raw=true "Register Page")
 
-![Login Page](./public/img/login.png?raw=true "Login Page");
+![Login Page](./public/img/login.png?raw=true "Login Page")
 
-![Empty-list Page](./public/img/emptyList.png?raw=true "Empty-list Page");
+![Empty-list Page](./public/img/emptyList.png?raw=true "Empty-list Page")
 
 ![List all your Goals](./public/img/goalsList.png?raw=true "Welcome")
